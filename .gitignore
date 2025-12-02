@@ -1,0 +1,9 @@
+# Dependencies 
+**/node_modules/
+bun.lock
+
+# Docker
+**/volumes/
+
+# Environment Variables
+**/.env

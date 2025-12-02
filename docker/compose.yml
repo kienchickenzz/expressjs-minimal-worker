@@ -1,0 +1,19 @@
+services:
+    redis:
+        hostname: "redis_message_queue"
+        container_name: "redis_message_queue"
+        image: "redis:7.0-alpine"
+        ports:
+        - "6379:6379"
+        networks:
+        - worker
+        volumes:
+        - ./volumes/redis:/data
+        environment:
+            REDIS_PASSWORD: ${REDIS_PASSWORD}
+        command: ["redis-server", "--requirepass", "${REDIS_PASSWORD}"]
+
+networks:
+    worker:
+        driver: bridge
+        name: worker_network
