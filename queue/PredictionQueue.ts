@@ -1,6 +1,8 @@
 import { Queue, RedisOptions } from 'bullmq'
 import { BaseQueue } from './BaseQueue'
 
+import { JobData } from './BaseQueue'
+
 export class PredictionQueue extends BaseQueue {
     private queueName: string
 
@@ -17,10 +19,14 @@ export class PredictionQueue extends BaseQueue {
         return this.queue
     }
 
-    public async processJob(data: any): Promise<any> {
+    public async processJob(data: JobData): Promise<any> {
         // Implement your job processing logic here
-        console.log(`[PredictionQueue] Processing job data:`, data)
+        const { delay, message } = data; // Extract delay and message from JobData
+        console.log(`[PredictionQueue] Processing job with message: "${message}" and delay: ${delay}ms`);
+        
         // Simulate some processing
-        return { status: 'completed', dataProcessed: data }
+        await new Promise( resolve => setTimeout( resolve, delay ) )
+
+        return { status: 'completed', dataProcessed: data };
     }
 }

@@ -11,6 +11,12 @@ const start = () => {
 
     const queueManager = QueueManager.getInstance()
     queueManager.setupAllQueues()
+
+    // Prediction
+    const predictionQueue = queueManager.getQueue('prediction')
+    const predictionWorker = predictionQueue.createWorker()
+    console.info(`Prediction Worker ${predictionWorker.id} created`)
+
     wokerServer.use( '/admin/queue', queueManager.getBullBoardRouter() )
 
     httpServer.listen( PORT, () => {

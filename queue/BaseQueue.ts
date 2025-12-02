@@ -5,6 +5,11 @@ const WORKER_CONCURRENCY = 100000
 const REMOVE_ON_AGE = -1
 const REMOVE_ON_COUNT = -1
 
+export interface JobData {
+    id: string
+    [key: string]: any
+}
+
 export abstract class BaseQueue {
     protected queue: Queue
     protected queueEvents: QueueEvents
@@ -32,7 +37,7 @@ export abstract class BaseQueue {
         return this.worker
     }
 
-    public async addJob(jobData: any): Promise<Job> {
+    public async addJob(jobData: JobData): Promise<Job> {
         const jobId = jobData.id
 
         let removeOnFail: number | boolean | KeepJobs | undefined = true
